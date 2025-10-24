@@ -1,0 +1,32 @@
+/* Variables */
+@import url("https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,200..800&family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&display=swap");
+
+$red: hsl(0, 100%, 66%);
+$purple: hsl(274, 82%, 60%);
+$black: hsl(0, 0%, 2%);
+$black100: hsl(0, 0%, 12%);
+$black200: hsl(0, 0%, 18%);
+$black300: hsl(0, 0%, 23%);
+$gray: hsl(0, 0%, 51%);
+$gray100: hsl(0, 0%, 91%);
+$gray200: hsl(0, 0%, 96%);
+$white: hsl(0, 0%, 100%);
+
+/* mixins */
+@mixin displayFlex {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Typography */
+@mixin textPreset1 {
+  font-family: "DM Sans", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 600i;
+  font-style: italic;
+
+  font-size: 96px;
+  line-height: 100%;
+  letter-spacing: -2px;
+}
