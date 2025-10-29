@@ -1,0 +1,13 @@
+@use "./main" as *;
+
+body {
+  transition: background-color 0.4s, color 0.3s;
+}
+
+.greet {
+  @include headingLInter;
+}
+
+label {
+  display: none;
+}

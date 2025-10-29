@@ -1,5 +1,5 @@
 /* Variables */
-@import url("https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,200..800&family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Inconsolata:wght@200..900&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Lora:ital,wght@0,400..700;1,400..700&display=swap");
 
 $red: hsl(0, 100%, 66%);
 $purple: hsl(274, 82%, 60%);
@@ -12,21 +12,129 @@ $gray100: hsl(0, 0%, 91%);
 $gray200: hsl(0, 0%, 96%);
 $white: hsl(0, 0%, 100%);
 
-/* mixins */
-@mixin displayFlex {
-  display: flex;
-  justify-content: center;
-  align-items: center;
+%sansSerif {
+  font-family: "Inter", sans-serif;
+  font-optical-sizing: auto;
+  font-style: normal;
 }
 
-/* Typography */
-@mixin textPreset1 {
-  font-family: "DM Sans", sans-serif;
+%serif {
+  font-family: "Lora", serif;
   font-optical-sizing: auto;
-  font-weight: 600i;
-  font-style: italic;
+  font-style: normal;
+}
 
-  font-size: 96px;
-  line-height: 100%;
-  letter-spacing: -2px;
+%mono {
+  font-family: "Inconsolata", monospace;
+  font-optical-sizing: auto;
+  font-style: normal;
+}
+
+/* San-Serif */
+@mixin headingLInter {
+  @extend %sansSerif;
+
+  font-size: 64px;
+  line-height: 77px;
+}
+
+@mixin headingMInter {
+  @extend %sansSerif;
+
+  font-size: 24px;
+  line-height: 29px;
+}
+
+@mixin headingSInter {
+  @extend %sansSerif;
+
+  font-size: 20px;
+  line-height: 24px;
+  font-weight: 600;
+}
+
+@mixin bodyMInter {
+  @extend %sansSerif;
+
+  font-size: 18px;
+  line-height: 24px;
+}
+
+@mixin bodySInter {
+  @extend %sansSerif;
+
+  font-size: 14px;
+  line-height: 17px;
+}
+
+/* Serif */
+@mixin headingLLora {
+  @extend %serif;
+
+  font-size: 64px;
+  line-height: 77px;
+}
+
+@mixin headingMLora {
+  @extend %serif;
+
+  font-size: 24px;
+  line-height: 29px;
+}
+
+@mixin headingSLora {
+  @extend %serif;
+
+  font-size: 20px;
+  line-height: 24px;
+}
+
+@mixin bodyMLora {
+  @extend %serif;
+
+  font-size: 18px;
+  line-height: 24px;
+}
+
+@mixin bodySLora {
+  @extend %serif;
+
+  font-size: 14px;
+  line-height: 17px;
+}
+
+/* Mono */
+@mixin headingLMono {
+  @extend %mono;
+
+  font-size: 64px;
+  line-height: 77px;
+}
+
+@mixin headingMMono {
+  @extend %mono;
+
+  font-size: 24px;
+  line-height: 29px;
+}
+
+@mixin headingSMono {
+  @extend %mono;
+
+  font-size: 20px;
+  line-height: 24px;
+}
+
+@mixin bodyMMono {
+  @extend %mono;
+
+  font-size: 18px;
+  line-height: 24px;
+}
+
+@mixin bodySMono {
+  @extend %mono;
+
+  font-size: 14px;
+  line-height: 17px;
 }

@@ -1,5 +1,6 @@
 import { useState } from "react";
 import axios from "axios";
+import "../styles/Body.scss";
 
 type Phonetic = { text?: string; audio?: string };
 type Definition = { definition: string; example?: string; synonyms?: string[] };
@@ -89,9 +90,7 @@ export default function Body() {
   return (
     <div style={{ maxWidth: 720, margin: "0 auto", padding: "1rem" }}>
       <form onSubmit={onSubmit} aria-busy={status === "loading"}>
-        <label htmlFor="word" style={{ display: "block", fontWeight: 600 }}>
-          Search a word
-        </label>
+        <label htmlFor="word">Search a word</label>
 
         <div style={{ display: "flex", gap: ".5rem", marginTop: ".25rem" }}>
           <input
@@ -110,7 +109,6 @@ export default function Body() {
           </button>
         </div>
 
-        {/* Validation message */}
         {validationError && (
           <p style={{ color: "crimson", marginTop: ".25rem" }}>
             {validationError}
@@ -118,7 +116,6 @@ export default function Body() {
         )}
       </form>
 
-      {/* Show nothing on first render */}
       {status === "idle" && !data && !error && (
         <section
           aria-live="polite"
@@ -130,7 +127,9 @@ export default function Body() {
           }}
         >
           <h3 style={{ marginTop: 0 }}>Welcome 👋</h3>
-          <h3 style={{ marginTop: 0 }}>What word are you looking for?</h3>
+          <h3 style={{ marginTop: 0 }} className="greet">
+            What word are you looking for?
+          </h3>
           <p>
             Type a word above and press <kbd>Enter</kbd> to search.
           </p>
