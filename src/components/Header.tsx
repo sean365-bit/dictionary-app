@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import "../styles/Header.scss";
 import logo from "../assets/images/logo.svg";
 import iconMoon from "../assets/images/icon-moon.svg";
@@ -22,11 +22,8 @@ const Header = function () {
         </div>
 
         <div className="theme_container">
-          <div>
-            <p>San Serif</p>
-            <img src={iconArrow} alt="icon" loading="lazy" />
-
-            <div className="vertical_divisor"></div>
+          <div className="theme_options">
+            <NavItem />
 
             <Switch isDarkMode={isDarkMode} onToggle={toggleDarkMode} />
 
@@ -39,6 +36,47 @@ const Header = function () {
         </div>
       </nav>
     </header>
+  );
+};
+
+const NavItem = function () {
+  const [open, setOpen] = useState<boolean>(false);
+  const dropdownRef = useRef<HTMLDivElement | null>(null);
+
+  useEffect(() => {
+    function handleClickOutside(event: MouseEvent) {
+      if (
+        dropdownRef.current &&
+        !dropdownRef.current.contains(event.target as Node)
+      ) {
+        setOpen(false);
+      }
+    }
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
+
+  return (
+    <div className="navItem" ref={dropdownRef}>
+      <p className="option_one">San Serif</p>
+
+      <img
+        src={iconArrow}
+        alt="icon"
+        loading="lazy"
+        onClick={() => setOpen((prev) => !prev)}
+      />
+
+      {open && (
+        <div className="dropdown">
+          <p className="option_one">San Seif</p>
+          <p className="option_two">Serif</p>
+          <p className="option_three">Mono</p>
+        </div>
+      )}
+      <div className="vertical_divisor"></div>
+    </div>
   );
 };
 

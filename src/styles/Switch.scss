@@ -40,9 +40,9 @@ input:focus + .slider {
   box-shadow: 0 0 1px $purple;
 }
 input:checked + .slider:before {
-  -webkit-transform: translateX(41px);
-  -ms-transform: translateX(41px);
-  transform: translateX(41px);
+  -webkit-transform: translateX(25px);
+  -ms-transform: translateX(25px);
+  transform: translateX(25px);
 }
 .slider.round {
   border-radius: 34px;
@@ -54,4 +54,17 @@ input:checked + .slider:before {
 body.dark {
   background-color: $black;
   color: $white;
+}
+
+.dark .dropdown {
+  box-shadow: 0 0 40px 15px hsla(274, 82%, 60%, 0.5);  
+  background: $black200;
+}
+
+@media screen and (min-width: 375px) {
+  input:checked + .slider:before {
+    -webkit-transform: translateX(41px);
+    -ms-transform: translateX(41px);
+    transform: translateX(41px);
+  }
 }
