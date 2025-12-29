@@ -11,3 +11,66 @@ body {
 label {
   display: none;
 }
+
+.result_container {
+  width: 100%;
+  max-width: 480px;
+  margin: 0 auto;
+}
+
+.input_container {
+  display: flex;
+
+  position: relative;
+
+  padding-left: 15px;
+  padding-right: 15px;
+
+  margin-top: 30px;
+  margin-bottom: 45px;
+}
+
+/* winp */
+.input {
+  width: 100%;
+  max-width: 480px;
+  margin: 0 auto;
+
+  height: 60px;
+  border: none;
+  background: $gray100;
+  border-radius: 10px;
+
+  padding-left: 20px;
+
+  @include headingSInter;
+}
+
+.search_button {
+  background: none;
+  border: none;
+
+  height: 60px;
+  width: 60px;
+
+  position: absolute;
+  top: 50%;
+  left: 90%;
+  transform: translate(-50%, -50%);
+
+  cursor: pointer;
+}
+
+/* Error Handling */
+.error_message {
+  color: $red;
+  margin-top: 0.25rem;
+}
+/* Error Handling */
+
+@media screen and (min-width: 768px) {
+  .result_container,
+  .input {
+    max-width: 720px;
+  }
+}

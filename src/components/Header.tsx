@@ -7,7 +7,8 @@ import iconArrow from "../assets/images/icon-arrow-down.svg";
 import Switch from "./Switch";
 
 const Header = function () {
-  const [isDarkMode, setIsDarkMode] = useState(false);
+  const [isDarkMode, setIsDarkMode] = useState<boolean>(false);
+
   const toggleDarkMode = () => setIsDarkMode((prev) => !prev);
 
   useEffect(() => {
@@ -42,6 +43,7 @@ const Header = function () {
 const NavItem = function () {
   const [open, setOpen] = useState<boolean>(false);
   const dropdownRef = useRef<HTMLDivElement | null>(null);
+  const [selectedOption, setSelectedOption] = useState<string>("Sans Serif");
 
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
@@ -52,14 +54,28 @@ const NavItem = function () {
         setOpen(false);
       }
     }
-
     document.addEventListener("mousedown", handleClickOutside);
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
+  const handleSelect = function (option: string) {
+    setSelectedOption(option);
+    setOpen(false);
+  };
+
+  const getClassName = function () {
+    let className = "option_one";
+
+    if (selectedOption === "Sans Serif") className = "option_one";
+    if (selectedOption === "Serif") className = "option_two";
+    if (selectedOption === "Mono") className = "option_three";
+
+    return className;
+  };
+
   return (
     <div className="navItem" ref={dropdownRef}>
-      <p className="option_one">San Serif</p>
+      <p className={getClassName()}>{selectedOption}</p>
 
       <img
         src={iconArrow}
@@ -70,11 +86,18 @@ const NavItem = function () {
 
       {open && (
         <div className="dropdown">
-          <p className="option_one">San Seif</p>
-          <p className="option_two">Serif</p>
-          <p className="option_three">Mono</p>
+          <p onClick={() => handleSelect("Sans Serif")} className="option_one">
+            Sans Serif
+          </p>
+          <p onClick={() => handleSelect("Serif")} className="option_two">
+            Serif
+          </p>
+          <p onClick={() => handleSelect("Mono")} className="option_three">
+            Mono
+          </p>
         </div>
       )}
+
       <div className="vertical_divisor"></div>
     </div>
   );

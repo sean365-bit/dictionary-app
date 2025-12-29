@@ -1,6 +1,8 @@
 import { useState } from "react";
 import axios from "axios";
 import "../styles/Body.scss";
+/* */
+import searchLogo from "../assets/images/icon-search.svg";
 
 type Phonetic = { text?: string; audio?: string };
 type Definition = { definition: string; example?: string; synonyms?: string[] };
@@ -88,12 +90,13 @@ export default function Body() {
   };
 
   return (
-    <div style={{ maxWidth: 720, margin: "0 auto", padding: "1rem" }}>
+    <div className="result_container">
       <form onSubmit={onSubmit} aria-busy={status === "loading"}>
         <label htmlFor="word">Search a word</label>
 
-        <div style={{ display: "flex", gap: ".5rem", marginTop: ".25rem" }}>
+        <div className="input_container">
           <input
+            className="input"
             id="word"
             type="text"
             value={query}
@@ -102,50 +105,34 @@ export default function Body() {
               setValidationError(null);
             }}
             placeholder="Search for a word..."
-            style={{ flex: 1, padding: ".5rem" }}
           />
-          <button type="submit">
-            {status === "loading" ? "Searching…" : "Search"}
+
+          <button type="submit" className="search_button">
+            <img src={searchLogo} alt="Search Logo" loading="lazy" />
           </button>
         </div>
 
-        {validationError && (
-          <p style={{ color: "crimson", marginTop: ".25rem" }}>
-            {validationError}
-          </p>
-        )}
+        {validationError && <p className="error_message">{validationError}</p>}
       </form>
 
       {status === "idle" && !data && !error && (
-        <section
-          aria-live="polite"
-          style={{
-            marginTop: "1rem",
-            padding: "1rem",
-            border: "1px solid #eee",
-            borderRadius: 12,
-          }}
-        >
-          <h3 style={{ marginTop: 0 }}>Welcome 👋</h3>
-          <h3 style={{ marginTop: 0 }} className="greet">
-            What word are you looking for?
-          </h3>
+        <section aria-live="polite">
+          <h3>Welcome 👋</h3>
+          <h3 className="greet">What word are you looking for?</h3>
           <p>
             Type a word above and press <kbd>Enter</kbd> to search.
           </p>
         </section>
       )}
 
-      {status === "loading" && <p style={{ marginTop: "1rem" }}>Loading…</p>}
+      {status === "loading" && <p>Loading…</p>}
 
-      {status === "error" && (
-        <p style={{ marginTop: "1rem", color: "crimson" }}>Error: {error}</p>
-      )}
+      {status === "error" && <p>Error: {error}</p>}
 
       {status === "success" && entry && (
-        <div style={{ marginTop: "1rem" }}>
-          <div style={{ display: "flex", alignItems: "center", gap: ".75rem" }}>
-            <h2 style={{ margin: 0 }}>{entry.word}</h2>
+        <div>
+          <div>
+            <h2>{entry.word}</h2>
 
             {audioUrl && (
               <button type="button" onClick={() => playAudio(audioUrl)}>
@@ -157,7 +144,7 @@ export default function Body() {
           </div>
 
           {nounMeanings.length > 0 && (
-            <section style={{ marginTop: "1rem" }}>
+            <section>
               <h3>Noun</h3>
               <ol>
                 {nounMeanings.flatMap((m, i) =>
@@ -179,7 +166,7 @@ export default function Body() {
           )}
 
           {verbMeanings.length > 0 && (
-            <section style={{ marginTop: "1rem" }}>
+            <section>
               <h3>Verb</h3>
               <ol>
                 {verbMeanings.flatMap((m, i) =>
@@ -187,7 +174,7 @@ export default function Body() {
                     <li key={`verb-${i}-${j}`}>
                       <div>{d.definition}</div>
                       {d.example && (
-                        <div style={{ opacity: 0.8 }}>
+                        <div>
                           <em>Example:</em> “{d.example}”
                         </div>
                       )}
