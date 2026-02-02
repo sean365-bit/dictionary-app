@@ -1,8 +1,8 @@
 import { useState } from "react";
 import axios from "axios";
 import "../styles/Body.scss";
-/* */
 import searchLogo from "../assets/images/icon-search.svg";
+import playLogo from "../assets/images/icon-play.svg";
 
 type Phonetic = { text?: string; audio?: string };
 type Definition = { definition: string; example?: string; synonyms?: string[] };
@@ -14,7 +14,7 @@ type Meaning = {
 type Entry = { word: string; phonetics?: Phonetic[]; meanings: Meaning[] };
 type Status = "idle" | "loading" | "success" | "error";
 
-export default function Body() {
+const Body = function () {
   const [query, setQuery] = useState("");
   const [data, setData] = useState<Entry[] | null>(null);
   const [status, setStatus] = useState<Status>("idle");
@@ -27,9 +27,9 @@ export default function Body() {
     try {
       const res = await axios.get<Entry[]>(
         `https://api.dictionaryapi.dev/api/v2/entries/en/${encodeURIComponent(
-          word
+          word,
         )}`,
-        { signal }
+        { signal },
       );
       setData(res.data);
       setStatus("success");
@@ -117,9 +117,8 @@ export default function Body() {
 
       {status === "idle" && !data && !error && (
         <section aria-live="polite">
-          <h3>Welcome 👋</h3>
           <h3 className="greet">What word are you looking for?</h3>
-          <p>
+          <p className="greet_prgh">
             Type a word above and press <kbd>Enter</kbd> to search.
           </p>
         </section>
@@ -130,62 +129,83 @@ export default function Body() {
       {status === "error" && <p>Error: {error}</p>}
 
       {status === "success" && entry && (
-        <div>
-          <div>
-            <h2>{entry.word}</h2>
+        <div className="success_status">
+          <div className="success_head">
+            <h2 className="word_result">{entry.word}</h2>
 
             {audioUrl && (
-              <button type="button" onClick={() => playAudio(audioUrl)}>
-                🔊 Play Audio
+              <button
+                className="play_button"
+                type="button"
+                onClick={() => playAudio(audioUrl)}
+              >
+                <img src={playLogo} alt="button" />
               </button>
             )}
-
-            {ipa && <span style={{ opacity: 0.7 }}>{ipa}</span>}
           </div>
 
+          {ipa && <span className="pronunciation">{ipa}</span>}
+
           {nounMeanings.length > 0 && (
-            <section>
-              <h3>Noun</h3>
-              <ol>
+            <section className="noun_section">
+              <div className="parts_of_speech">
+                <h3>voun</h3>
+                <div className="horizontal_divisor"></div>
+              </div>
+
+              <p className="meaning">Meaning</p>
+
+              <ul>
                 {nounMeanings.flatMap((m, i) =>
                   m.definitions.map((d, j) => (
                     <li key={`noun-${i}-${j}`}>{d.definition}</li>
-                  ))
+                  )),
                 )}
-              </ol>
+              </ul>
               {nounMeanings.some((m) => m.synonyms?.length) && (
                 <p>
-                  <strong>Synonyms:</strong>{" "}
-                  {nounMeanings
-                    .flatMap((m) => m.synonyms ?? [])
-                    .filter(Boolean)
-                    .join(", ")}
+                  <span className="synonyms">Synonyms</span>
+                  {"  "}
+                  <span className="synonyms_results">
+                    {nounMeanings
+                      .flatMap((m) => m.synonyms ?? [])
+                      .filter(Boolean)
+                      .join(", ")}
+                  </span>
                 </p>
               )}
             </section>
           )}
 
           {verbMeanings.length > 0 && (
-            <section>
-              <h3>Verb</h3>
-              <ol>
+            <section className="verb_section">
+              <div className="parts_of_speech">
+                <h3>verb</h3>
+                <div className="horizontal_divisor"></div>
+              </div>
+
+              <p className="meaning">Meaning</p>
+
+              <ul>
                 {verbMeanings.flatMap((m, i) =>
                   m.definitions.map((d, j) => (
                     <li key={`verb-${i}-${j}`}>
-                      <div>{d.definition}</div>
+                      <div className="verb_def">{d.definition}</div>
                       {d.example && (
-                        <div>
+                        <div className="example">
                           <em>Example:</em> “{d.example}”
                         </div>
                       )}
                     </li>
-                  ))
+                  )),
                 )}
-              </ol>
+              </ul>
             </section>
           )}
         </div>
       )}
     </div>
   );
-}
+};
+
+export default Body;

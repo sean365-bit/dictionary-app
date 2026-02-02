@@ -12,6 +12,11 @@ $gray100: hsl(0, 0%, 91%);
 $gray200: hsl(0, 0%, 96%);
 $white: hsl(0, 0%, 100%);
 
+%paddings {
+  padding-left: 15px;
+  padding-right: 15px;
+}
+
 %sansSerif {
   font-family: "Inter", sans-serif;
   font-optical-sizing: auto;
