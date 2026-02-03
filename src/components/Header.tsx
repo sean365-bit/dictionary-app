@@ -6,7 +6,17 @@ import iconSun from "../assets/images/icon-sun.svg";
 import iconArrow from "../assets/images/icon-arrow-down.svg";
 import Switch from "./Switch";
 
-const Header = function () {
+interface HeaderProps {
+  selectedFont: string;
+  onFontChange: (font: string) => void;
+}
+
+interface NavItemProps {
+  selectedFont: string;
+  onFontChange: (font: string) => void;
+}
+
+const Header = function ({ selectedFont, onFontChange }: HeaderProps) {
   const [isDarkMode, setIsDarkMode] = useState<boolean>(false);
 
   const toggleDarkMode = () => setIsDarkMode((prev) => !prev);
@@ -24,14 +34,14 @@ const Header = function () {
 
         <div className="theme_container">
           <div className="theme_options">
-            <NavItem />
+            <NavItem selectedFont={selectedFont} onFontChange={onFontChange} />
 
             <Switch isDarkMode={isDarkMode} onToggle={toggleDarkMode} />
 
             {isDarkMode ? (
-              <img src={iconMoon} alt="icon moon" loading="lazy" />
-            ) : (
               <img src={iconSun} alt="icon sun" loading="lazy" />
+            ) : (
+              <img src={iconMoon} alt="icon moon" loading="lazy" />
             )}
           </div>
         </div>
@@ -40,10 +50,9 @@ const Header = function () {
   );
 };
 
-const NavItem = function () {
+const NavItem = function ({ selectedFont, onFontChange }: NavItemProps) {
   const [open, setOpen] = useState<boolean>(false);
   const dropdownRef = useRef<HTMLDivElement | null>(null);
-  const [selectedOption, setSelectedOption] = useState<string>("Sans Serif");
 
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
@@ -59,23 +68,23 @@ const NavItem = function () {
   }, []);
 
   const handleSelect = function (option: string) {
-    setSelectedOption(option);
+    onFontChange(option);
     setOpen(false);
   };
 
   const getClassName = function () {
     let className = "option_one";
 
-    if (selectedOption === "Sans Serif") className = "option_one";
-    if (selectedOption === "Serif") className = "option_two";
-    if (selectedOption === "Mono") className = "option_three";
+    if (selectedFont === "Sans Serif") className = "option_one";
+    if (selectedFont === "Serif") className = "option_two";
+    if (selectedFont === "Mono") className = "option_three";
 
     return className;
   };
 
   return (
     <div className="navItem" ref={dropdownRef}>
-      <p className={getClassName()}>{selectedOption}</p>
+      <p className={getClassName()}>{selectedFont}</p>
 
       <img
         src={iconArrow}

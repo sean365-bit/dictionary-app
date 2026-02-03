@@ -14,12 +14,29 @@ type Meaning = {
 type Entry = { word: string; phonetics?: Phonetic[]; meanings: Meaning[] };
 type Status = "idle" | "loading" | "success" | "error";
 
-const Body = function () {
+interface BodyProps {
+  selectedFont: string;
+}
+
+const Body = function ({ selectedFont }: BodyProps) {
   const [query, setQuery] = useState("");
   const [data, setData] = useState<Entry[] | null>(null);
   const [status, setStatus] = useState<Status>("idle");
   const [error, setError] = useState<string | null>(null);
   const [validationError, setValidationError] = useState<string | null>(null);
+
+  const getFontClass = () => {
+    switch (selectedFont) {
+      case "Sans Serif":
+        return "font-sans";
+      case "Serif":
+        return "font-serif";
+      case "Mono":
+        return "font-mono";
+      default:
+        return "font-sans";
+    }
+  };
 
   async function fetchWord(word: string, signal?: AbortSignal) {
     setStatus("loading");
@@ -117,21 +134,23 @@ const Body = function () {
 
       {status === "idle" && !data && !error && (
         <section aria-live="polite">
-          <h3 className="greet">What word are you looking for?</h3>
-          <p className="greet_prgh">
+          <h3 className={`greet ${getFontClass()}`}>
+            What word are you looking for?
+          </h3>
+          <p className={`greet_prgh ${getFontClass()}`}>
             Type a word above and press <kbd>Enter</kbd> to search.
           </p>
         </section>
       )}
 
-      {status === "loading" && <p>Loading…</p>}
+      {status === "loading" && <p className="status">Loading…</p>}
 
-      {status === "error" && <p>Error: {error}</p>}
+      {status === "error" && <p className="status">{error}</p>}
 
       {status === "success" && entry && (
-        <div className="success_status">
+        <div className="status">
           <div className="success_head">
-            <h2 className="word_result">{entry.word}</h2>
+            <h2 className={`word_result ${getFontClass()}`}>{entry.word}</h2>
 
             {audioUrl && (
               <button
@@ -149,13 +168,13 @@ const Body = function () {
           {nounMeanings.length > 0 && (
             <section className="noun_section">
               <div className="parts_of_speech">
-                <h3>voun</h3>
+                <h3 className={`${getFontClass()}`}>noun</h3>
                 <div className="horizontal_divisor"></div>
               </div>
 
-              <p className="meaning">Meaning</p>
+              <p className={`meaning ${getFontClass()}`}>Meaning</p>
 
-              <ul>
+              <ul className={`${getFontClass()}`}>
                 {nounMeanings.flatMap((m, i) =>
                   m.definitions.map((d, j) => (
                     <li key={`noun-${i}-${j}`}>{d.definition}</li>
@@ -164,9 +183,9 @@ const Body = function () {
               </ul>
               {nounMeanings.some((m) => m.synonyms?.length) && (
                 <p>
-                  <span className="synonyms">Synonyms</span>
+                  <span className={`synonyms ${getFontClass()}`}>Synonyms</span>
                   {"  "}
-                  <span className="synonyms_results">
+                  <span className={`synonyms_results ${getFontClass()}`}>
                     {nounMeanings
                       .flatMap((m) => m.synonyms ?? [])
                       .filter(Boolean)
@@ -180,13 +199,13 @@ const Body = function () {
           {verbMeanings.length > 0 && (
             <section className="verb_section">
               <div className="parts_of_speech">
-                <h3>verb</h3>
+                <h3 className={`${getFontClass()}`}>verb</h3>
                 <div className="horizontal_divisor"></div>
               </div>
 
-              <p className="meaning">Meaning</p>
+              <p className={`meaning ${getFontClass()}`}>Meaning</p>
 
-              <ul>
+              <ul className={`${getFontClass()}`}>
                 {verbMeanings.flatMap((m, i) =>
                   m.definitions.map((d, j) => (
                     <li key={`verb-${i}-${j}`}>

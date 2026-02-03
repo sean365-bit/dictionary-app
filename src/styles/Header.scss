@@ -87,20 +87,6 @@ nav {
   }
 }
 
-.option_one {
-  @include headingSInter;
-}
-
-.option_two {
-  @include headingSLora;
-}
-
-.option_three {
-  @include headingSMono;
-}
-
-/* dropdown end */
-
 .vertical_divisor {
   width: 1px;
   height: 40px;

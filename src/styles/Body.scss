@@ -7,15 +7,13 @@ body {
 }
 
 .greet {
-  @include headingLInter;
-
+  font-size: 64px;
   margin-top: 45px;
   margin-bottom: 25px;
   @extend %paddings;
 }
 
 .greet_prgh {
-  @include bodyMInter;
   @extend %paddings;
 }
 
@@ -70,6 +68,7 @@ label {
 }
 
 ul {
+  font-size: 18px;
   list-style: none;
   padding-left: 0;
 }
@@ -92,12 +91,13 @@ ul li::before {
   font-size: 1.2em;
 }
 
-.success_status {
+.status {
   margin-top: 45px;
   @extend %paddings;
 }
 
 .success_head {
+  margin-bottom: 15px;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -105,7 +105,7 @@ ul li::before {
 }
 
 .word_result {
-  @include headingLInter;
+  font-size: 64px;
 }
 
 .play_button {
@@ -115,6 +115,7 @@ ul li::before {
 }
 
 .pronunciation {
+  font-size: 20px;
   color: $purple;
   @extend %paddings;
 }
@@ -133,9 +134,14 @@ ul li::before {
   justify-content: space-around;
   align-items: center;
   margin-bottom: 20px;
+
+  h3 {
+    font-size: 24px;
+  }
 }
 
 .meaning {
+  font-size: 20px;
   color: $gray;
   margin-bottom: 20px;
   @extend %paddings;
@@ -149,16 +155,43 @@ ul li::before {
 }
 
 .synonyms {
+  font-size: 18px;
   color: $gray;
   @extend %paddings;
 }
 
 .synonyms_results {
+  font-size: 18px;
+  font-weight: bold;
   color: $purple;
 }
 
 .example {
   color: $gray;
+}
+
+.font-sans {
+  @extend %sansSerif;
+}
+
+.font-serif {
+  @extend %serif;
+}
+
+.font-mono {
+  @extend %mono;
+}
+
+.option_one {
+  @include headingSInter;
+}
+
+.option_two {
+  @include headingSLora;
+}
+
+.option_three {
+  @include headingSMono;
 }
 
 @media screen and (min-width: 768px) {
